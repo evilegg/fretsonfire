@@ -218,13 +218,13 @@ class Texture:
     """Load the texture from a PIL image"""
     image = image.transpose(Image.FLIP_TOP_BOTTOM)
     if image.mode == "RGBA":
-      string = image.tostring('raw', 'RGBA', 0, -1)
+      string = image.tobytes('raw', 'RGBA', 0, -1)
       self.loadRaw(image.size, string, GL_RGBA, 4)
     elif image.mode == "RGB":
-      string = image.tostring('raw', 'RGB', 0, -1)
+      string = image.tobytes('raw', 'RGB', 0, -1)
       self.loadRaw(image.size, string, GL_RGB, 3)
     elif image.mode == "L":
-      string = image.tostring('raw', 'L', 0, -1)
+      string = image.tobytes('raw', 'L', 0, -1)
       self.loadRaw(image.size, string, GL_LUMINANCE, 1)
     else:
       raise TextureException("Unsupported image mode '%s'" % image.mode)
@@ -264,7 +264,7 @@ class Texture:
       # appears to be using PIL to do the conversion.
       string = pygame.image.tostring(surface, "RGB")
       image = Image.fromstring("RGB", surface.get_size(), string).convert("L")
-      string = image.tostring('raw', 'L', 0, -1)
+      string = image.tobytes('raw', 'L', 0, -1)
       self.loadRaw(surface.get_size(), string, GL_LUMINANCE, GL_INTENSITY8)
     else:
       if alphaChannel:
@@ -283,7 +283,7 @@ class Texture:
       # appears to be using PIL to do the conversion.
       string = pygame.image.tostring(surface, "RGB")
       image = Image.fromstring("RGB", surface.get_size(), string).convert("L")
-      string = image.tostring('raw', 'L', 0, -1)
+      string = image.tobytes('raw', 'L', 0, -1)
       self.loadSubRaw(surface.get_size(), position, string, GL_INTENSITY8)
     else:
       if alphaChannel:
